@@ -83,4 +83,4 @@ npm run dev
 
 ---
 
-Built by shreyas kumar — [LinkedIn](#) · [GitHub](#)
+Built by shreyas kumar — [LinkedIn](https://www.linkedin.com/in/shreyas-kumar-3455aa1a4/) · [GitHub](https://github.com/sheyas29/Collably_v2)
