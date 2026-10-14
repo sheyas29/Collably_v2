@@ -1,0 +1,10 @@
+export const STORAGE_KEY = 'collably-board-state';
+
+export const ACTIONS = {
+  ADD_CARD: 'ADD_CARD',
+  DELETE_CARD: 'DELETE_CARD',
+  ADD_COLUMN: 'ADD_COLUMN',
+  DELETE_COLUMN: 'DELETE_COLUMN',
+  MOVE_CARD: 'MOVE_CARD',
+  RESTORE_STATE: 'RESTORE_STATE',
+};

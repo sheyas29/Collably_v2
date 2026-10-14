@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-mist: #faf7f5;
+  --color-mist-violet: #ede5f7; /* was #F3EEFA — deeper, so columns actually separate from bg */
+  --color-surface: #fffdfb;
+
+  --color-ink: #3a3541;
+  --color-ink-soft: #70687b; /* Darkened from #8a8394 to pass WCAG AA 4.5:1 on light backgrounds */
+
+  /* Bumped saturation ~18% so the three tags are actually distinguishable at a glance */
+  --color-rose: #e8b8b8;
+  --color-sage: #a9cba0;
+  --color-periwinkle: #adb8ea;
+
+  --font-display: 'Fraunces', serif;
+  --font-sans: 'Inter', sans-serif;
+
+  /* Shadows deepened — old values were nearly invisible against the mist bg */
+  --shadow-feather: 0 8px 24px -4px rgb(160 130 190 / 0.22);
+  --shadow-feather-hover: 0 16px 36px -6px rgb(160 130 190 / 0.32);
+  --shadow-feather-drag: 0 24px 50px -10px rgb(160 130 190 / 0.42);
+}
+
+@layer base {
+  body {
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-periwinkle);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  .scroll-mist {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-periwinkle) transparent;
+  }
+
+  .scroll-mist::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scroll-mist::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scroll-mist::-webkit-scrollbar-thumb {
+    background-color: var(--color-periwinkle);
+    border-radius: 999px;
+  }
+
+  .scroll-mist::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-ink-soft);
+  }
+
+  :root.dark {
+    /* Deep periwinkle-tinted surfaces */
+    --color-mist: oklch(15% 0.015 270);
+    --color-mist-violet: oklch(19% 0.02 270);
+    --color-surface: oklch(23% 0.025 270);
+    
+    /* Light text on dark - increased lightness for WCAG AAA contrast */
+    --color-ink: oklch(99% 0.01 270);
+    --color-ink-soft: oklch(85% 0.02 270);
+    
+    /* Shadows are practically black to create depth against dark surfaces */
+    --shadow-feather: 0 8px 24px -4px rgb(0 0 0 / 0.5);
+    --shadow-feather-hover: 0 16px 36px -6px rgb(0 0 0 / 0.7);
+    --shadow-feather-drag: 0 24px 50px -10px rgb(0 0 0 / 0.9);
+  }
+
+  /* Override input text in dark mode for better visibility */
+  .dark input::placeholder {
+    color: var(--color-ink-soft);
+    opacity: 0.5;
+  }
+}
+
+@utility bg-aurora {
+  background-color: var(--color-mist);
+  background-image:
+    radial-gradient(
+      ellipse 500px 350px at 0% 0%,
+      rgba(173, 184, 234, 0.15),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 450px 350px at 100% 0%,
+      rgba(232, 184, 184, 0.1),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 500px 400px at 15% 100%,
+      rgba(169, 203, 160, 0.08),
+      transparent 70%
+    );
+  background-attachment: fixed;
+}
+
+/* Card Component (Polished) */
+.ds-card-v1 {
+  position: relative;
+  border-radius: 16px;
+  background-color: var(--color-surface);
+  border: 1px solid rgba(58, 53, 65, 0.05);
+  box-shadow: 0 8px 24px -4px rgba(160, 130, 190, 0.22);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: grab;
+  padding: 20px;
+  margin-bottom: 12px;
+}
+.ds-card-v1:hover {
+  box-shadow: 0 16px 36px -6px rgba(160, 130, 190, 0.32);
+  transform: translateY(-2px);
+}
+.ds-card-v1.ds-dragging {
+  opacity: 0.6;
+  transform: scale(1.02) rotate(1deg);
+  box-shadow: 0 24px 50px -10px rgba(160, 130, 190, 0.42);
+}
+
+.ds-card-title-v1 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.ds-card-tags-v1 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.ds-card-tag-v1 {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 1.5px 8px;
+  border-radius: 9999px;
+  color: #3a3541; /* Explicitly dark text because tag backgrounds are always light pastels */
+  border: 1px solid rgba(58, 53, 65, 0.08);
+}
+
+.ds-delete-btn-v1 {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  opacity: 0.3;
+  background: rgba(58, 53, 65, 0.05);
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+/* Ensure 44x44px minimum touch target for accessibility */
+.ds-delete-btn-v1::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  bottom: -12px;
+  left: -12px;
+}
+.ds-card-v1:hover .ds-delete-btn-v1 {
+  opacity: 1;
+}
+.ds-delete-btn-v1:hover {
+  background: rgba(58, 53, 65, 0.1);
+  color: var(--color-ink);
+}
+
+/* Empty State Component (Polished) */
+.ds-empty-v3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.ds-empty-dot-v3 {
+  border-radius: 50%;
+  background-color: var(--color-periwinkle);
+  margin-bottom: 10px;
+  opacity: 0.6;
+  width: 4px;
+  height: 4px;
+}
+
+.ds-empty-text-v3 {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-ink-soft);
+  opacity: 0.55;
+  margin: 0;
+}
+
+/* Column Header Component (Polished) */
+.ds-col-header-v1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px 14px;
+}
+.ds-col-header-left-v1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ds-col-dot-v1 {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.ds-col-title-v1 {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.ds-col-count-v1 {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  background-color: rgba(58, 53, 65, 0.08);
+  color: var(--color-ink);
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Empty State Component (High Contrast Variant 2) */
+.ds-empty-v3-pol-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 16px;
+  box-sizing: border-box;
+}
+.ds-empty-dot-v3-pol-2 {
+  border-radius: 50%;
+  background-color: var(--color-periwinkle);
+  margin-bottom: 10px;
+  opacity: 0.75;
+  width: 4px;
+  height: 4px;
+}
+.ds-empty-text-v3-pol-2 {
+  margin: 0;
+  color: var(--color-ink);
+  opacity: 0.85;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+
+
+

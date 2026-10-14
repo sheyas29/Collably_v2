@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Primary Meta Tags -->
+    <title>Collably — Kanban Board</title>
+    <meta name="title" content="Collably — Kanban Board" />
+    <meta name="description" content="A beautifully crafted, from-scratch React Kanban board with drag-and-drop, dark mode, and a hand-built design system." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Collably — Kanban Board" />
+    <meta property="og:description" content="A beautifully crafted, from-scratch React Kanban board with drag-and-drop, dark mode, and a hand-built design system." />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Collably — Kanban Board" />
+    <meta name="twitter:description" content="A beautifully crafted, from-scratch React Kanban board with drag-and-drop, dark mode, and a hand-built design system." />
+
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#faf7f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1e1b21" media="(prefers-color-scheme: dark)" />
+
+    <!-- Prevent FOUC: apply dark class before React hydrates -->
+    <script>
+      if (localStorage.theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
