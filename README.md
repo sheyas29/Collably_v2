@@ -2,7 +2,7 @@
 
 A Kanban board built from scratch in React — no state management libraries, no drag-and-drop shortcuts left unexplained. Every architectural decision below was made deliberately and can be defended in detail.
 
-**[Live Demo](#)** _(add your deployed link here)_ · **[Repo](#)**
+**[Live Demo](https://collably-v2.vercel.app/)** · 
 
 ---
 
